@@ -37,3 +37,24 @@ darshan-setu-main/
     ├── src/           # UI Components & Pages
     ├── public/        # Static Assets
     └── index.html     # Root HTML
+
+🔧 Installation & Setup
+1. Clone the Repo
+Bash
+git clone [https://github.com/Namanwagadre/Darshan-Setu-Fullstack.git](https://github.com/Namanwagadre/Darshan-Setu-Fullstack.git)
+cd Darshan-Setu-Fullstack
+2. Backend Setup
+Bash
+cd backend
+npm install
+# Create a .env file and add your MONGO_URI, JWT_SECRET, etc.
+npm start
+3. Frontend Setup
+Bash
+cd ../frontend
+npm install
+npm run dev
+👨‍💻 Developed By
+Naman Wagadre M.C.A. Student @ SCSIT-DAVV, Indore GitHub | LinkedIn
+
+📝 Note: This project was developed as part of the Unified Mentor Virtual Internship.

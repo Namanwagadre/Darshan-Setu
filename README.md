@@ -1,4 +1,3 @@
-
 🚩 Darshan Setu - Temples of India Portal
 Darshan Setu is a full-stack MERN application designed to explore and manage information about India's sacred temples. This project follows a Monorepo structure, housing both the frontend and backend in a single repository for better management and deployment.
 

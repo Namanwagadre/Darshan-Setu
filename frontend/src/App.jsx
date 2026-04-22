@@ -7,7 +7,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-
   const userInfoString = localStorage.getItem('userInfo');
   const user = userInfoString ? JSON.parse(userInfoString) : null;
 
@@ -41,92 +40,122 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-orange-50 py-5 px-5">
+    <div className="min-h-screen bg-orange-50 py-5 px-4 md:px-8 font-sans">
       
-      
-      <div className="max-w-7xl mx-auto flex justify-between items-center bg-white p-4 rounded-xl shadow-sm mb-8">
-        <h2 className="text-2xl font-bold text-orange-600">Darshan Setu</h2>
+      {/* --- CLEAN & COMPACT RESPONSIVE NAVBAR --- */}
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center bg-white p-5 rounded-2xl shadow-sm mb-8 gap-4 border border-orange-100">
+        <h2 className="text-2xl font-black text-orange-600 tracking-tighter">Darshan Setu</h2>
         
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center md:items-end gap-3 w-full md:w-auto">
           {user ? (
-            <>
-              <span className="font-semibold text-gray-700">Namaste, {user.name} 🙏</span>
-              <Link to="/profile" className="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-colors">
-                👤 My Profile
-              </Link>
+            <div className="flex flex-col items-center md:items-end gap-2 w-full">
+              <span className="font-bold text-gray-700 text-sm md:text-base">
+                Namaste, {user.name} 🙏
+              </span>
               
-              {user.role === 'admin' && (
-                <Link to="/admin" className="px-4 py-2 bg-blue-100 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
-                  ➕ Add Temple
+              {/* Action Buttons Group */}
+              <div className="flex flex-wrap justify-center gap-2">
+                <Link to="/profile" className="px-3 py-2 bg-green-50 text-green-700 text-xs font-bold rounded-lg hover:bg-green-600 hover:text-white transition-all border border-green-200">
+                  👤 Profile
                 </Link>
-              )}
-              <button onClick={handleLogout} className="px-4 py-2 bg-red-100 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors">
-                Logout
-              </button>
-            </>
+                
+                {user.role === 'admin' && (
+                  <Link to="/admin" className="px-3 py-2 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg hover:bg-blue-600 hover:text-white transition-all border border-blue-200">
+                    ➕ Add Temple
+                  </Link>
+                )}
+
+                <button 
+                  onClick={handleLogout} 
+                  className="px-3 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-600 hover:text-white transition-all border border-red-200"
+                >
+                  Logout 🚪
+                </button>
+              </div>
+            </div>
           ) : (
-            <>
-              <Link to="/login" className="px-4 py-2 bg-orange-100 text-orange-600 font-semibold rounded-lg hover:bg-orange-600 hover:text-white transition-colors">Login</Link>
-              <Link to="/signup" className="px-4 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors">Sign Up</Link>
-            </>
+            <div className="flex gap-3">
+              <Link to="/login" className="px-6 py-2 bg-orange-100 text-orange-600 font-bold rounded-xl hover:bg-orange-600 hover:text-white transition-all">Login</Link>
+              <Link to="/signup" className="px-6 py-2 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition-all shadow-md">Sign Up</Link>
+            </div>
           )}
         </div>
       </div>
-     
 
+      {/* --- HERO SECTION --- */}
       <div className="max-w-7xl mx-auto mb-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-4">
-          Explore Temples of India
+        <h1 className="text-4xl md:text-6xl font-black text-orange-600 mb-4 px-2 leading-tight">
+          Explore Temples <br className="md:hidden"/> of India
         </h1>
-        <div className="max-w-2xl mx-auto relative mt-6">
+        <div className="max-w-2xl mx-auto relative mt-6 px-2">
           <input
             type="text"
-            placeholder="Search by temple name, city, state, or deity..."
-            className="w-full px-5 py-4 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-700 text-lg transition-all"
+            placeholder="Search name, city, or deity..."
+            className="w-full px-6 py-4 rounded-full border-2 border-orange-100 shadow-lg focus:outline-none focus:ring-4 focus:ring-orange-200 text-gray-700 text-base md:text-lg transition-all"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <span className="absolute right-5 top-4 text-2xl">🔍</span>
+          <span className="absolute right-8 top-4 text-xl">🔍</span>
         </div>
       </div>
 
+      {/* --- TEMPLE GRID --- */}
       <div className="max-w-7xl mx-auto">
         {loading ? (
-          <div className="text-center text-2xl font-semibold text-gray-500 mt-20">Fetching Temples... ⏳</div>
+          <div className="text-center py-20">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-4 border-orange-600 mb-4"></div>
+            <p className="text-xl font-bold text-gray-500">Fetching Spiritual Wonders... 🕉️</p>
+          </div>
         ) : filteredTemples.length === 0 ? (
-          <div className="text-center text-xl text-gray-500 mt-10">No temples found matching "{searchTerm}" 😔</div>
+          <div className="text-center text-xl font-bold text-gray-400 mt-10 bg-white p-10 rounded-3xl shadow-inner">
+            No temples found matching "{searchTerm}" 😔
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {filteredTemples.map((temple) => (
-              <Link to={`/temple/${temple._id}`} key={temple._id} className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 block cursor-pointer flex flex-col">
+              <Link to={`/temple/${temple._id}`} key={temple._id} className="bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-orange-50 flex flex-col group">
                 
-               
-                <div className="h-48 w-full bg-gray-200 overflow-hidden relative">
+                {/* Image Container */}
+                <div className="h-56 w-full bg-gray-100 overflow-hidden relative">
                   {temple.imageUrl ? (
-                    <img src={temple.imageUrl} alt={temple.name} className="w-full h-full object-cover" />
+                    <img src={temple.imageUrl} alt={temple.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium bg-gray-100">
+                    <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium bg-gray-50">
                       <span>📸 No Image Available</span>
                     </div>
                   )}
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black text-orange-600 shadow-sm uppercase tracking-widest border border-orange-100">
+                    🚩 {temple.location.state}
+                  </div>
                 </div>
 
+                {/* Content */}
                 <div className="p-6 flex-1 flex flex-col">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-1">{temple.name}</h2>
-                  <p className="text-orange-500 font-medium text-sm mb-4">Deity: {temple.deity}</p>
-                  <div className="flex items-center text-gray-600 mb-4 bg-gray-50 p-2 rounded-lg">
-                    <span>📍</span><p className="ml-2 text-sm font-semibold">{temple.location.city}, {temple.location.state}</p>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-5 line-clamp-3">{temple.historicalBackground}</p>
+                  <h2 className="text-2xl font-extrabold text-gray-800 mb-1 group-hover:text-orange-600 transition-colors leading-tight">{temple.name}</h2>
+                  <p className="text-orange-500 font-bold text-[10px] mb-4 uppercase tracking-[0.2em]">Deity: {temple.deity}</p>
                   
-                  <div className="border-t border-gray-200 pt-4 mt-auto">
-                    <h3 className="font-semibold text-gray-800 mb-2">🙏 Darshan Timings</h3>
-                    {temple.darshanTimings && temple.darshanTimings.map((timing, index) => (
-                      <div key={index} className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>{timing.sessionName}</span>
-                        <span className="font-medium text-gray-800">{timing.startTime} - {timing.endTime}</span>
-                      </div>
-                    ))}
+                  <div className="flex items-center text-gray-700 mb-4 bg-orange-50/70 p-3 rounded-2xl border border-orange-100">
+                    <span className="text-base">📍</span>
+                    <p className="ml-2 text-xs font-bold uppercase tracking-tight">{temple.location.city}, {temple.location.state}</p>
+                  </div>
+                  
+                  <p className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">
+                    {temple.historicalBackground}
+                  </p>
+                  
+                  {/* Timings */}
+                  <div className="border-t-2 border-dashed border-gray-100 pt-5 mt-auto">
+                    <h3 className="text-xs font-black text-gray-400 mb-3 uppercase tracking-widest flex items-center gap-2">
+                      🙏 Darshan Timings
+                    </h3>
+                    <div className="space-y-2">
+                      {temple.darshanTimings && temple.darshanTimings.slice(0, 2).map((timing, index) => (
+                        <div key={index} className="flex justify-between items-center text-[11px] bg-gray-50/50 px-3 py-2 rounded-lg">
+                          <span className="font-bold text-gray-500">{timing.sessionName}</span>
+                          <span className="font-black text-orange-600">{timing.startTime} - {timing.endTime}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </Link>

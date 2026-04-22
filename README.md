@@ -3,7 +3,7 @@
 **Darshan Setu** is a full-stack MERN application designed to explore and manage information about India's sacred temples. This project follows a **Monorepo** structure, housing both the frontend and backend in a single repository for easy management.
 
 ## 🚀 Live Links
-* **Frontend (Live):** [https://darshan-setu.vercel.app](https://darshan-setu-3acn5ehhm-namanwagadres-projects.vercel.app)
+* **Frontend (Live):** https://darshan-setu-six.vercel.app/
 * **Backend API:** [https://darshan-setu-backend.onrender.com](https://darshan-setu-backend.onrender.com)
 
 ---
